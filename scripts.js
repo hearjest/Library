@@ -1,13 +1,13 @@
-const submitButton=document.getElementById('submit');
+const submitButton=document.getElementById('submitButton');
 submitButton.addEventListener('click',function(){
-    let title=document.getElementById('Title').textContent;
-    let author=document.getElementById('Author').textContent;
-    let pages=document.getElementById('Pages').textContent;
+    let title=document.getElementById('BookTitle').value;
+    let author=document.getElementById('Author').value;
+    let pages=document.getElementById('Pages').value;
     let readStatus=document.getElementById('ReadOrNot').value;
     addBookToLibrary(title,author,pages,readStatus);
 });
-const displayButton=document.getElementById('displayBooks');
-displayButton.addEventListener('click',displayBooks());
+//const displayButton=document.getElementById('displayBooks');
+//displayButton.addEventListener('click',displayBooks());
 let myLibrary=[];
 
 function Book(title, author, pages,read){
@@ -29,14 +29,28 @@ Book.prototype.info=function(){
 
 function addBookToLibrary(title,author,pages,readStatus){
     myLibrary.push(new Book(title,author,pages,readStatus));
+    displayBooks();
 };
 
 function displayBooks(){
-    let div;
-    let title;
-    let author;
-    let pages;
-    
-    for(let i=0;i<myLibrary.length;i++){
+    let div=document.createElement('div');
+    div.classList.add('bookCard');
+    let titleBox=document.createElement('div');
+    let authorBox=document.createElement('div');
+    let pagesBox=document.createElement('div');
+    let readBox=document.createElement('div');
+    titleBox.textContent=myLibrary[myLibrary.length-1].title;
+    authorBox.textContent=myLibrary[myLibrary.length-1].author;
+    pagesBox.textContent=myLibrary[myLibrary.length-1].page;
+    if(isRead){
+        readBox.textContent='finished reading'
+    }else{
+        readBox.textContent='not read'
     }
+    document.querySelector('#libraryContainer').appendChild(div);
+    let thing=document.querySelectorAll('.bookCard')[document.querySelectorAll('.bookCard').length-1];
+    thing.appendChild(titleBox);
+    thing.appendChild(authorBox);
+    thing.appendChild(pagesBox);
+    thing.appendChild(readBox);
 }

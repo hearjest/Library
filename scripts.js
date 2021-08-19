@@ -4,11 +4,14 @@ submitButton.addEventListener('click',function(){
     let title=document.getElementById('BookTitle').value;
     let author=document.getElementById('Author').value;
     let pages=document.getElementById('Pages').value;
-    let readStatus=document.getElementById('ReadOrNot').value;
+    let readStatus
+    if(document.getElementById('ReadOrNot').value==='true'){
+        readStuatus=true;
+    }else{
+        readStatus=false;
+    }
     addBookToLibrary(title,author,pages,readStatus);
 });
-//const displayButton=document.getElementById('displayBooks');
-//displayButton.addEventListener('click',displayBooks());
 let myLibrary=[];
 
 function Book(title, author, pages,read){
@@ -39,27 +42,55 @@ function displayBooks(){
     let titleBox=document.createElement('div');
     let authorBox=document.createElement('div');
     let pagesBox=document.createElement('div');
-    let readBox=document.createElement('div');
+    let readBox=document.createElement('button');
     let deleteButton=document.createElement('button');
     deleteButton.setAttribute('type','submit');
     deleteButton.textContent='Remove';
     deleteButton.addEventListener('click',function(){
-        deleteButton.parentElement.remove();
-    })
+        myLibrary.splice(Number(deleteButton.parentElement.id),1)
+        let list=document.getElementsByClassName('bookCard');
+        let count=0;
+        /*for(let i=(Number(deleteButton.parentElement.id));i<list.length;i++){
+            list[i].setAttribute('id',`${Number(deleteButton.parentElement.id)+count}`);
+            count++;
+        }*/deleteButton.parentElement.remove();  
+        for(let i=0;i<list.length;i++){
+            list[i].setAttribute('id',`${i}`);
+        }
+        
+    });
+    readBox.setAttribute('type','submit');
+    readBox.addEventListener('click',function(){
+        let book=myLibrary[Number(readBox.parentElement.id)];
+        if(book.isRead){
+            readBox.textContent='Not finished';
+        }else{
+            readBox.textContent='Finished reading';
+        }
+        book.isRead=!isRead;
+    });
     titleBox.textContent=myLibrary[myLibrary.length-1].title;
     authorBox.textContent=myLibrary[myLibrary.length-1].author;
-    pagesBox.textContent=myLibrary[myLibrary.length-1].page;
+    pagesBox.textContent='Pages: '+myLibrary[myLibrary.length-1].page;
     if(isRead){
-        readBox.textContent='finished reading'
+        readBox.textContent='Finished reading'
     }else{
-        readBox.textContent='not read'
+        readBox.textContent='Not finished'
     }
-    div.setAttribute('id',`${index++}`);
+    div.setAttribute('id',`${myLibrary.length-1}`);
     document.querySelector('#libraryContainer').appendChild(div);
-    let thing=document.querySelectorAll('.bookCard')[document.querySelectorAll('.bookCard').length-1];
-    thing.appendChild(titleBox);
-    thing.appendChild(authorBox);
-    thing.appendChild(pagesBox);
-    thing.appendChild(readBox);
-    thing.appendChild(deleteButton);
+    let currentCard=document.querySelectorAll('.bookCard')[document.querySelectorAll('.bookCard').length-1];
+    currentCard.appendChild(titleBox);
+    currentCard.appendChild(authorBox);
+    currentCard.appendChild(pagesBox);
+    currentCard.appendChild(readBox);
+    currentCard.appendChild(deleteButton);
+    clear();
+}
+
+function clear(){
+    document.getElementById('BookTitle').value='';
+    document.getElementById('Author').value='';
+    document.getElementById('Pages').value='';
+    document.getElementById('ReadOrNot').value='true';
 }

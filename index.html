@@ -8,18 +8,17 @@
     </head>
 
     <body>
-        <div style='min-width:20%;position:absolute;top:40%;background-color:#BD968E;min-height:20%;'>
-            adwd
+        <div style='overflow:hidden;min-width:20%;position:absolute;top:40%;background-color:#BD968E;min-height:20%;'>
+            Add a book
             <div style='display:flex;flex-direction: column;align-content: space-around;'>
                 <input id='BookTitle' type='text' placeholder="Book Title">
                 <input id='Author' type='text' placeholder="Author">
                 <input id='Pages' type='text' placeholder="Pages">
                 <select name='ReadOrNot' id='ReadOrNot'>
-                    <option value=true>True</option>
+                    <option value=true selected>True</option>
                     <option value=''>False</option>
                 </select> 
                 <button id='submitButton' type='submit'>Add Book</button>
-                <button id='displayBooks' type='submit'>Display Books</button>
             </div>
         </div>
         <div id='libraryContainer'>

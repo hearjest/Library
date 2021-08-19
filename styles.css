@@ -18,18 +18,17 @@ body{
     display:flex;
     flex-direction: row;
     flex-wrap:wrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-content: flex-start;
-    overflow:scroll;
+    overflow-y:scroll;
 }
 
 .bookCard{
     height:20%;
-    width:20%;
     background-color: white;
     display:flex;
     justify-content: space-between;
     flex-direction: column;
-    flex-basis:20%;
-    margin:5px 5px;
+    flex-basis:18.5%;
+    margin:10px 5px 10px 5px;
 }

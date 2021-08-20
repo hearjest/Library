@@ -4,12 +4,12 @@ submitButton.addEventListener('click',function(){
     let title=document.getElementById('BookTitle').value;
     let author=document.getElementById('Author').value;
     let pages=document.getElementById('Pages').value;
-    let readStatus
+    let readStatus;
     if(document.getElementById('ReadOrNot').value==='true'){
-        readStuatus=true;
+        readStatus=true;
     }else{
         readStatus=false;
-    }
+    };
     addBookToLibrary(title,author,pages,readStatus);
 });
 let myLibrary=[];
@@ -18,7 +18,7 @@ function Book(title, author, pages,read){
     this.title=title;
     this.author=author;
     this.page=pages;
-    isRead=read; 
+    this.isRead=read; 
 }
 
 Book.prototype.info=function(){
@@ -43,21 +43,21 @@ function displayBooks(){
     let authorBox=document.createElement('div');
     let pagesBox=document.createElement('div');
     let readBox=document.createElement('button');
+    let deleteButtonContainer=document.createElement('div');
     let deleteButton=document.createElement('button');
+    let deleteIcon=document.createElement('span');
+    deleteIcon.classList.add('material-icons-outlined');
+    deleteIcon.textContent='delete';//Create html elements
     deleteButton.setAttribute('type','submit');
-    deleteButton.textContent='Remove';
+    //deleteButton.textContent='Remove';
+    deleteButton.classList.add('deleteButton');
     deleteButton.addEventListener('click',function(){
         myLibrary.splice(Number(deleteButton.parentElement.id),1)
         let list=document.getElementsByClassName('bookCard');
-        let count=0;
-        /*for(let i=(Number(deleteButton.parentElement.id));i<list.length;i++){
-            list[i].setAttribute('id',`${Number(deleteButton.parentElement.id)+count}`);
-            count++;
-        }*/deleteButton.parentElement.remove();  
+        deleteButton.parentElement.parentElement.remove();  
         for(let i=0;i<list.length;i++){
             list[i].setAttribute('id',`${i}`);
         }
-        
     });
     readBox.setAttribute('type','submit');
     readBox.addEventListener('click',function(){
@@ -67,24 +67,27 @@ function displayBooks(){
         }else{
             readBox.textContent='Finished reading';
         }
-        book.isRead=!isRead;
-    });
+        book.isRead=!book.isRead;
+    });                                         //Add event listeners to buttons
     titleBox.textContent=myLibrary[myLibrary.length-1].title;
     authorBox.textContent=myLibrary[myLibrary.length-1].author;
     pagesBox.textContent='Pages: '+myLibrary[myLibrary.length-1].page;
-    if(isRead){
-        readBox.textContent='Finished reading'
+    if(myLibrary[myLibrary.length-1].isRead){
+        readBox.textContent='Finished reading';
     }else{
-        readBox.textContent='Not finished'
-    }
+        readBox.textContent='Not finished';
+    }                                          //Change textcontent of elements
     div.setAttribute('id',`${myLibrary.length-1}`);
     document.querySelector('#libraryContainer').appendChild(div);
     let currentCard=document.querySelectorAll('.bookCard')[document.querySelectorAll('.bookCard').length-1];
+    currentCard.appendChild(deleteButtonContainer);
+    deleteButtonContainer.appendChild(deleteButton);
+    deleteButton.appendChild(deleteIcon);
     currentCard.appendChild(titleBox);
     currentCard.appendChild(authorBox);
     currentCard.appendChild(pagesBox);
     currentCard.appendChild(readBox);
-    currentCard.appendChild(deleteButton);
+    
     clear();
 }
 

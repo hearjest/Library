@@ -32,3 +32,8 @@ body{
     flex-basis:18.5%;
     margin:10px 5px 10px 5px;
 }
+
+.deleteButton{
+    float:right;
+    position:relative;
+}
